@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Box Under Image</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+  <div class="text-center">
+    <!-- Centered GIF -->
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXR4Ym9nc3lweWhuNDFpbmw0d2tseHVkOWdzaTNnZnNncjh3aHh6NCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/MDJ9IbxxvDUQM/giphy.gif" alt="Centered Photo" class="mx-auto mb-6 rounded-lg shadow-lg">
+
+    <!-- Text Box and Submit Button -->
+    <form id="text-form" class="mb-6">
+      <textarea id="user-message" rows="3" placeholder="Type your message here..." class="w-full p-2 border rounded-lg"></textarea>
+      <button type="submit" class="mt-4 px-6 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+        Submit
+      </button>
+    </form>
+
+    <!-- Buttons Below -->
+    <div class="space-x-4">
+      <button class="px-6 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+        Button 1
+      </button>
+      <button id="button-2" class="px-6 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+        Button 2
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Submit form handler
+    document.getElementById('text-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const message = document.getElementById('user-message').value;
+
+      if (message) {
+        // Send the message to the backend
+        const response = await fetch('/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message }),
+        });
+
+        if (response.ok) {
+          alert('Message saved successfully!');
+          document.getElementById('user-message').value = ''; // Clear text area
+        } else {
+          alert('Failed to save the message.');
+        }
+      }
+    });
+
+    // Function to move Button 2 randomly
+    document.getElementById("button-2").addEventListener("click", function () {
+      const button = this;
+      const randomX = Math.floor(Math.random() * 300) - 150;
+      const randomY = Math.floor(Math.random() * 300) - 150;
+      button.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    });
+  </script>
+</body>
+</html>
