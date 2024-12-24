@@ -1,14 +1,12 @@
 const express = require('express');
-const path = require('path');
 const fs = require('fs');
-
+const path = require('path');
 const app = express();
+
 app.use(express.json());
 
-// Serve your HTML file
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
+// Serve the frontend HTML
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoint to handle text submission
 app.post('/submit', (req, res) => {
